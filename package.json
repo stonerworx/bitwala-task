@@ -6,10 +6,16 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "lint": "eslint ."
   },
   "jest": {
     "preset": "jest-expo"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   },
   "dependencies": {
     "@expo/vector-icons": "^12.0.0",
@@ -35,9 +41,14 @@
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
+    "@bitwala/babel-preset": "0.2.0",
+    "@bitwala/eslint-config": "0.3.8",
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",
+    "husky": "^4.3.8",
     "jest-expo": "~40.0.0",
+    "prettier": "^2.2.1",
+    "pretty-quick": "^3.1.0",
     "typescript": "~4.0.0"
   },
   "private": true
