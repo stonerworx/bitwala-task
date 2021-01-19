@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 
 import { BitcoinBlock } from '../../types';
 import { ListEmpty } from './ListEmpty';
 import { ListHeader } from './ListHeader';
 import { ListItem } from './ListItem';
-import { styles } from './styles';
 
 interface BlockListProps {
   data: readonly BitcoinBlock[];
@@ -29,3 +28,9 @@ export function BlockList({ data, onBlockSelected }: BlockListProps) {
     />
   );
 }
+
+const styles = StyleSheet.create({
+  blockList: {
+    width: '100%',
+  },
+});

@@ -1,7 +1,7 @@
 import * as React from 'react';
+import { StyleSheet } from 'react-native';
 
 import { Text, View } from '../Themed';
-import { styles } from './styles';
 
 export function ListHeader() {
   return (
@@ -12,3 +12,17 @@ export function ListHeader() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  row: {
+    flex: 1,
+    flexGrow: 1,
+    flexDirection: 'row',
+    padding: 20,
+    borderBottomColor: '#fff',
+    borderBottomWidth: 2,
+  },
+  col: {
+    paddingRight: 5,
+  },
+});

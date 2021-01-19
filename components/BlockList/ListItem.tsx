@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { formatDistance } from 'date-fns';
-import { Pressable } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 
 import { Text, View } from '../Themed';
 import { BitcoinBlock } from '../../types';
-import { styles } from './styles';
 
 export function ListItem({
   block: { height, time, hash },
@@ -23,3 +22,17 @@ export function ListItem({
     </Pressable>
   );
 }
+
+export const styles = StyleSheet.create({
+  row: {
+    flex: 1,
+    flexGrow: 1,
+    flexDirection: 'row',
+    padding: 20,
+    borderBottomColor: '#fff',
+    borderBottomWidth: 2,
+  },
+  col: {
+    paddingRight: 5,
+  },
+});
