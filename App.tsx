@@ -19,6 +19,26 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+function isWeb() {
+  if (typeof document != 'undefined') {
+    return true;
+  }
+
+  return false;
+}
+
+function wrapWithSentryNativeErrorBoundary(children: React.ReactNode) {
+  if (isWeb()) {
+    return children;
+  }
+
+  return (
+    <Sentry.Native.ErrorBoundary fallback={'An error has occurred'}>
+      {children}
+    </Sentry.Native.ErrorBoundary>
+  );
+}
+
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
@@ -26,15 +46,13 @@ export default function App() {
   if (!isLoadingComplete) {
     return null;
   } else {
-    return (
-      <Sentry.Native.ErrorBoundary fallback={'An error has occurred'}>
-        <ApolloProvider client={client}>
-          <SafeAreaProvider>
-            <Navigation colorScheme={colorScheme} />
-            <StatusBar />
-          </SafeAreaProvider>
-        </ApolloProvider>
-      </Sentry.Native.ErrorBoundary>
+    return wrapWithSentryNativeErrorBoundary(
+      <ApolloProvider client={client}>
+        <SafeAreaProvider>
+          <Navigation colorScheme={colorScheme} />
+          <StatusBar />
+        </SafeAreaProvider>
+      </ApolloProvider>,
     );
   }
 }
