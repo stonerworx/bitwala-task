@@ -2,10 +2,10 @@ import * as React from 'react';
 import { formatDistance } from 'date-fns';
 
 import { Text, View } from '../Themed';
-import { Block } from './types';
+import { BitcoinBlock } from '../../types';
 import { styles } from './styles';
 
-export function ListItem({ height, time, hash }: Block) {
+export function ListItem({ height, time, hash }: BitcoinBlock) {
   return (
     <View style={styles.row}>
       <Text style={styles.col}>{height}</Text>

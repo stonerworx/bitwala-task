@@ -15,3 +15,9 @@ export type BlocksTabParamList = {
 export type TransactionsTabParamList = {
   TransactionsTabScreen: undefined;
 };
+
+export interface BitcoinBlock {
+  height: number;
+  time: Date;
+  hash: string;
+}
