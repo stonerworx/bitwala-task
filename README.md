@@ -2,6 +2,14 @@
 
 Bitwala coding challenge: A React Native app that will display bitcoin latest blocks and transactions
 
+## Summary
+
+I focused on:
+
+- one working feature (blocks & blocks details) to show how I'd structure the app, write components, use hooks with Apollo
+- examples of unit tests, but by no means complete and covering all relevant cases
+- tools I'd use for linting, formatting, monitoring
+
 ## Dependencies to other systems
 
 - Bitquery GraphQL API
