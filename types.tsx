@@ -21,3 +21,16 @@ export interface BitcoinBlock {
   time: Date;
   hash: string;
 }
+
+export interface BitcoinBlockDetails {
+  height: number;
+  time: Date;
+  hash: string;
+  size: number;
+  strippedSize: number;
+  version: number;
+  weight: number;
+  chainwork: string;
+  difficulty: number;
+  transactionCount: number;
+}

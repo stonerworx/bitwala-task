@@ -9,13 +9,14 @@ import { styles } from './styles';
 
 interface BlockListProps {
   data: readonly BitcoinBlock[];
+  onBlockSelected: (block: BitcoinBlock) => void;
 }
 
-const renderItem = ({ item }: { item: BitcoinBlock }) => (
-  <ListItem height={item.height} time={item.time} hash={item.hash} />
-);
+export function BlockList({ data, onBlockSelected }: BlockListProps) {
+  const renderItem = ({ item }: { item: BitcoinBlock }) => (
+    <ListItem block={item} onPress={() => onBlockSelected(item)} />
+  );
 
-export function BlockList({ data }: BlockListProps) {
   return (
     <FlatList
       data={data}
