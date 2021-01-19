@@ -5,13 +5,13 @@ import * as React from 'react';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import BlocksTabScreen from '../screens/BlocksTabScreen';
-import TransactionsTabScreen from '../screens/TransactionsTabScreen';
+import { BlocksTabScreen } from '../screens/BlocksTabScreen';
+import { TransactionsTabScreen } from '../screens/TransactionsTabScreen';
 import { BottomTabParamList, BlocksTabParamList, TransactionsTabParamList } from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
-export default function BottomTabNavigator() {
+export function BottomTabNavigator() {
   const colorScheme = useColorScheme();
 
   return (
