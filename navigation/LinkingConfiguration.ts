@@ -6,14 +6,14 @@ export const LinkingConfiguration = {
     screens: {
       Root: {
         screens: {
-          TabOne: {
+          Blocks: {
             screens: {
-              TabOneScreen: 'one',
+              BlocksTabScreen: 'blocks',
             },
           },
-          TabTwo: {
+          Transactions: {
             screens: {
-              TabTwoScreen: 'two',
+              TransactionsTabScreen: 'transactions',
             },
           },
         },
