@@ -33,6 +33,10 @@ I've made good experiences using [react-testing-library](https://testing-library
 
 Real mobile testing could be realized with [Browserstack](https://www.browserstack.com/app-automate) but might get expensive if we want more parallel tests.
 
+### Sentry
+
+I added a basic configuration for [Sentry](https://sentry.io/welcome/) as it's already in use at Bitwala and will help us to track down errors happening on our customers devices. The DSN I'd inject through configuration when releasing the application.
+
 ## Future Features
 
 - Support multiple languages

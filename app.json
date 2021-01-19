@@ -27,6 +27,13 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
+    },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps"
+        }
+      ]
     }
   }
 }
