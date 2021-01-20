@@ -24,6 +24,7 @@ Bitwala coding challenge: A React Native app that will display bitcoin latest bl
     - [Sentry](#sentry)
     - [Error handling](#error-handling)
     - [Logging](#logging)
+    - [Caching & Performance](#caching--performance)
     - [i18n](#i18n)
     - [User Experience](#user-experience)
   - [How to get production ready](#how-to-get-production-ready)
@@ -37,6 +38,10 @@ I focused on:
 - one working feature (blocks & blocks details) to show how I'd structure the app, write components, use hooks with Apollo
 - examples of unit tests, but by no means complete and covering all relevant cases
 - tools I'd use for linting, formatting, monitoring
+
+In a real setting, I'd collaborate closely with PO, the other devs in the team and UI/UX during planning of the features, break down the task into smaller deliverables with clear acceptance criteria, create a technical solution design within the team and then start the implementation. As part of the implementation I'd think about test cases on multiple levels, according to the testing pyramid. As you can see with my commits, I always try to commit small, easily reviewable chunks of code. Depending on the development workflow at Bitwala, I'd either create feature branches or work trunk based with feature flags.
+
+![Blocks Screenshot](screenshot.jpg?raw=true 'Blocks Screenshot')
 
 ## Dependencies to other systems
 
@@ -122,6 +127,10 @@ If possible, it would be great to handle errors in a graceful way, so it would m
 
 I have not implemented any logging yet. While I think logging is very important for server side applications, I considered Sentry to be of more value for now. Logging however could be implemented with tools like loglevel, which would also allow us to push logs to a remote server.
 
+### Caching & Performance
+
+So far I've only used `InMemoryCache` from Apollo for my queries. I think caching can be optimized and I already saw a message from Apollo regarding caching of my queries. This and the performance of the endless scrolling list would be somethig that I'd take a deeper look at before releasing the application.
+
 ### i18n
 
 I have not implemented internationalization yet but would for a real world application with ie. [react-i18next](https://github.com/i18next/react-i18next)
@@ -137,11 +146,12 @@ As I decided to focus more on the coding part of this application, ie. structure
 
 ## How to get production ready
 
-- unit test coverage
+- Unit test coverage
   While I'm not a fan of enforcing a 100% unit test coverage, using the coverage as an indication where tests could be missing is a good thing. To become production ready we'd need to look at the code again, identify the important test cases and implement them.
-- proper error handling
+- Proper error handling
   - Introduce Error Boundaries where they make sense for the user to recover from errors
   - [React Native Exception Handler](https://github.com/a7ul/react-native-exception-handler) if we want to react to uncaught exceptions, other than just logging them to Sentry
-- use configuration variables with ie. [react-native-config](https://github.com/luggit/react-native-config)
-- automatic build pipeline including test stage
-- distribution configuration
+- Use configuration variables with ie. [react-native-config](https://github.com/luggit/react-native-config)
+- Automatic build pipeline including test stage
+- CI/CD, Distribution & Testing Release Candidates
+  We'd need to set up CI/CD pipelines that run our test & build process whenever the code changes. Additionally we'd need to set up pipelines to release the app to the respective app stores. From colleagues I heard that they've made great experiences with [Bitrise](https://www.bitrise.io/), so this is worth to check out. We can connect our Github repository and define jobs and triggers when to run them. Additionally we could set up [Device Testing](https://devcenter.bitrise.io/testing/testing-index/#device-testing) for our release candidates. We can register all test devices there and the testers will receive an email with a link to download this version of our app.
