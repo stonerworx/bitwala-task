@@ -2,7 +2,35 @@
 
 Bitwala coding challenge: A React Native app that will display bitcoin latest blocks and transactions
 
+- [bitwala-task](#bitwala-task)
+  - [Summary](#summary)
+  - [Dependencies to other systems](#dependencies-to-other-systems)
+  - [How to use](#how-to-use)
+    - [Run the tests](#run-the-tests)
+    - [Run the linter](#run-the-linter)
+    - [Run locally](#run-locally)
+    - [Run for Android](#run-for-android)
+    - [Run for iOS](#run-for-ios)
+    - [Run for Web](#run-for-web)
+  - [Decision documentation & suggestions](#decision-documentation--suggestions)
+    - [Expo](#expo)
+    - [ESlint & Prettier](#eslint--prettier)
+    - [Folder Structure](#folder-structure)
+    - [Resource Hooks](#resource-hooks)
+    - [State Management](#state-management)
+    - [React Native Testing Library](#react-native-testing-library)
+    - [Detox](#detox)
+    - [Browserstack](#browserstack)
+    - [Sentry](#sentry)
+    - [Error handling](#error-handling)
+    - [Logging](#logging)
+    - [i18n](#i18n)
+    - [User Experience](#user-experience)
+  - [How to get production ready](#how-to-get-production-ready)
+
 ## Summary
+
+I used the tech stack that is also in use at Bitwala (React Native, Typescript, Apollo, date-fns).
 
 I focused on:
 
@@ -60,6 +88,14 @@ I went with the folder structure that comes with Expo as it already allowed to s
 
 I used "resource hooks" to encapsulate and abstract data fetching with Apollo, a concept we used a lot in a previous project. My colleague Manu Hornung wrote a nice article about it if you're curious: https://manuscript.blog/future-proof-data-fetching-with-react/
 
+### State Management
+
+As I'm not handling a lot of data and this data is only used locally in one component, I decided to keep the complexity to a minimal and also keep the state local. If this application grows and we need to share state across components we could validate one of the following options:
+
+- [React Context](https://reactjs.org/docs/context.html)
+- [Apollo State Management](https://www.apollographql.com/docs/react/local-state/local-state-management/)
+- [Redux](https://redux.js.org/)
+
 ### React Native Testing Library
 
 I've made good experiences using [react-testing-library](https://testing-library.com/docs/react-testing-library/intro/) to test my React components from a users perspective. I've used [Enzyme](https://enzymejs.github.io/enzyme/) before but always found myself testing implementation details. Therefore, I decided to go with [react-native-testing-library](https://github.com/callstack/react-native-testing-library). Additionally, I talked to some of my colleagues who are using the library to cover whole scenarios (e.g. login, ticket purchase, etc.) by mimicking the according user actions and by checking if the UI components are shown correctly. This is a great step towards end to end tests for our React Native app. Doing this we could cover a lot of our scenarios, while the test runs would still be relatively fast.
@@ -98,3 +134,14 @@ As I decided to focus more on the coding part of this application, ie. structure
 - loading indicators or skeletons
 - pull to refresh
 - automatic updates for new blocks and transactions
+
+## How to get production ready
+
+- unit test coverage
+  While I'm not a fan of enforcing a 100% unit test coverage, using the coverage as an indication where tests could be missing is a good thing. To become production ready we'd need to look at the code again, identify the important test cases and implement them.
+- proper error handling
+  - Introduce Error Boundaries where they make sense for the user to recover from errors
+  - [React Native Exception Handler](https://github.com/a7ul/react-native-exception-handler) if we want to react to uncaught exceptions, other than just logging them to Sentry
+- use configuration variables with ie. [react-native-config](https://github.com/luggit/react-native-config)
+- automatic build pipeline including test stage
+- distribution configuration
