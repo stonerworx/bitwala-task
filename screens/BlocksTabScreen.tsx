@@ -9,7 +9,7 @@ import { BlockDetailsModal } from './BlockDetailsModal';
 
 export function BlocksTabScreen() {
   const [selectedBlockHeight, setSelectedBlockHeight] = useState<number | undefined>();
-  const { blocks } = useBlocks();
+  const { blocks, loadMore } = useBlocks();
 
   return (
     <View style={styles.container}>
@@ -21,7 +21,11 @@ export function BlocksTabScreen() {
           }}
         ></BlockDetailsModal>
       )}
-      <BlockList data={blocks} onBlockSelected={(block) => setSelectedBlockHeight(block.height)} />
+      <BlockList
+        data={blocks}
+        onBlockSelected={(block) => setSelectedBlockHeight(block.height)}
+        onEndReached={() => loadMore()}
+      />
     </View>
   );
 }

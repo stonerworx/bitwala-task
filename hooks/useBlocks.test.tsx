@@ -10,6 +10,10 @@ describe('useBlocks', () => {
     const mockNoResponse = {
       request: {
         query: BLOCKS_QUERY,
+        variables: {
+          offset: 0,
+          limit: 20,
+        },
       },
       result: {
         data: undefined,
@@ -32,6 +36,10 @@ describe('useBlocks', () => {
     const mockErrorResponse = {
       request: {
         query: BLOCKS_QUERY,
+        variables: {
+          offset: 0,
+          limit: 20,
+        },
       },
       error: new Error('something went wrong'),
     };
@@ -75,6 +83,10 @@ describe('useBlocks', () => {
     const mockResponse = {
       request: {
         query: BLOCKS_QUERY,
+        variables: {
+          offset: 0,
+          limit: 20,
+        },
       },
       result: {
         data: {

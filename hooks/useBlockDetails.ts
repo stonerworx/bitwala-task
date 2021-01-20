@@ -26,6 +26,10 @@ interface BitqueryBitcoinData {
   };
 }
 
+interface BitqueryBitcoinVariables {
+  height: number;
+}
+
 export const BLOCK_QUERY = gql`
   query GetBlock($height: Int!) {
     bitcoin(network: bitcoin) {
@@ -65,8 +69,8 @@ function mapBitqueryBlockToBlockDetails(
 }
 
 export function useBlockDetails(height?: number): BitcoinBlockDetails | undefined {
-  const { data } = useQuery<BitqueryBitcoinData>(BLOCK_QUERY, {
-    variables: { height },
+  const { data } = useQuery<BitqueryBitcoinData, BitqueryBitcoinVariables>(BLOCK_QUERY, {
+    variables: { height: height || 0 },
   });
 
   return data ? data.bitcoin.blocks.map(mapBitqueryBlockToBlockDetails)[0] : undefined;

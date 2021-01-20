@@ -1,8 +1,10 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { parseISO } from 'date-fns';
 
 import { BitcoinBlock } from '../types';
+
+const LIMIT = 20;
 
 interface BitqueryTimestamp {
   time: string;
@@ -20,10 +22,15 @@ interface BitqueryBitcoinData {
   };
 }
 
+interface BitqueryBitcoinVariables {
+  offset: number;
+  limit: number;
+}
+
 export const BLOCKS_QUERY = gql`
-  query {
+  query GetBlocks($offset: Int!, $limit: Int!) {
     bitcoin(network: bitcoin) {
-      blocks(options: { limit: 20 }) {
+      blocks(options: { limit: $limit, offset: $offset, desc: "height" }) {
         timestamp {
           time(format: "%Y-%m-%d %H:%M:%S")
         }
@@ -42,13 +49,27 @@ function mapBitqueryBlockToBlock(bitqueryBlock: BitqueryBlock): BitcoinBlock {
   };
 }
 
-export function useBlocks(): { blocks: ReadonlyArray<BitcoinBlock> } {
-  // TODO: error handling
-  const { data } = useQuery<BitqueryBitcoinData>(BLOCKS_QUERY);
+export function useBlocks(): { blocks: ReadonlyArray<BitcoinBlock>; loadMore: () => void } {
+  const [offset, setOffset] = useState(0);
+  const [blocks, setBlocks] = useState<readonly BitcoinBlock[]>([]);
 
-  const blocks = useMemo(() => (data ? data.bitcoin.blocks.map(mapBitqueryBlockToBlock) : []), [
+  const { data, loading } = useQuery<BitqueryBitcoinData, BitqueryBitcoinVariables>(BLOCKS_QUERY, {
+    variables: { offset, limit: LIMIT },
+  });
+  const newBlocks = useMemo(() => (data ? data.bitcoin.blocks.map(mapBitqueryBlockToBlock) : []), [
     data,
   ]);
 
-  return { blocks };
+  useEffect(() => {
+    setBlocks((previousBlocks) => [...previousBlocks, ...newBlocks]);
+  }, [newBlocks]);
+
+  function loadMore() {
+    if (loading) {
+      return;
+    }
+    setOffset(offset + LIMIT);
+  }
+
+  return { blocks, loadMore };
 }
